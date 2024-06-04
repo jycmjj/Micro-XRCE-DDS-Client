@@ -1,0 +1,5 @@
+struct Student {
+    string name ;  
+    long id;
+    string birthday;            
+};
