@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "Student.h"
+#include "data1.h"
 
 #include <uxr/client/client.h>
 #include <ucdr/microcdr.h>
@@ -69,7 +69,7 @@ int main(
     const char* participant_xml = "<dds>"
             "<participant>"
             "<rtps>"
-            "<name>default_xrce_participant2</name>"
+            "<name>default_xrce_participant3</name>"
             "</rtps>"
             "</participant>"
             "</dds>";
@@ -122,7 +122,7 @@ int main(
     while (connected && count < max_topics)
     {
         Student topic = {
-            "xiaomeixiang", 2021215222,"2003/05/08"
+            "张三", rand()%100001,1,{"hobby1", "hobby2", "hobby3"},
         };
 
         ucdrBuffer ub;
@@ -130,8 +130,9 @@ int main(
         uxr_prepare_output_stream(&session, reliable_out, datawriter_id, &ub, topic_size);
         Student_serialize_topic(&ub, &topic);
 
-        printf("Send topic: %s, id: %i,birthday %s\n", topic.name, topic.id,topic.birthday);
-        connected = uxr_run_session_time(&session, 1000);
+        printf("Send topic: %s, number: %i, grade: %d, hobbies: %s, %s, %s\n", 
+           topic.name, topic.number, topic.grade, topic.hobby[0], topic.hobby[1], topic.hobby[2]);
+        connected = uxr_run_session_time(&session, 100);
     }
 
     // Delete resources
